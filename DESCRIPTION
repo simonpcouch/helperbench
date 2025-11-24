@@ -34,4 +34,5 @@ LazyData: true
 Remotes:
     simonpcouch/side@@helperbench,
     simonpcouch/bluffbench,
-    simonpcouch/predictivebench
+    simonpcouch/predictivebench,
+    tidyverse/ellmer@hacky-openrouter-fix
