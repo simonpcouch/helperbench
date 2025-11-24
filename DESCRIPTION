@@ -1,0 +1,37 @@
+Package: helperbench
+Title: Refactoring Consistency of Large Language Models
+Version: 0.0.1
+Authors@R:
+    person("Simon", "Couch", , "simon.couch@posit.co", role = c("aut", "cre"))
+Description: A one-sample LLM evaluation that measures how reliably a model
+    can perform a simple refactoring task.
+License: MIT + file LICENSE
+Imports:
+    cli,
+    devtools,
+    ellmer,
+    fs,
+    glue,
+    mirai,
+    purrr,
+    rlang,
+    side,
+    testthat,
+    tibble,
+    vitals,
+    withr
+Suggests:
+    bluffbench,
+    callr,
+    predictivebench
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends:
+    R (>= 3.5)
+LazyData: true
+Remotes:
+    simonpcouch/side@@helperbench,
+    simonpcouch/bluffbench,
+    simonpcouch/predictivebench

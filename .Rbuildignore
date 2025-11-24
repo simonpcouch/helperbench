@@ -1,0 +1,12 @@
+^helperbench\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^README\.Rmd$
+^cran-comments\.md$
+inst/resources/bluffbench
+inst/resources/predictivebench
+inst/resources/ellmer
+inst/runs/logs/
+CLAUDE.md
+data-raw/
+inst/solver/

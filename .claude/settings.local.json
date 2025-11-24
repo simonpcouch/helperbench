@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__r-btw__btw_tool_docs_available_vignettes",
+      "mcp__r-btw__btw_tool_docs_vignette"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
