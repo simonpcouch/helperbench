@@ -7,7 +7,6 @@ Future AI assistants should read:
 * `ellmer::Chat()`
 * `vitals::Task()`
 * `side::kick()`
-* `vignette("vitals", package = "vitals")`
 
 Also, read all of R/.
 
