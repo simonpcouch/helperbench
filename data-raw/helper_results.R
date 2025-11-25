@@ -75,6 +75,7 @@ helper_results <-
     ),
     cost = (input / 1e6) * cost_input + (output / 1e6) * cost_output
   ) %>%
-  select(-cost_input, -cost_output)
+  select(-cost_input, -cost_output) %>%
+  relocate(c(input, output), .after = everything())
 
 usethis::use_data(helper_results, overwrite = TRUE)
