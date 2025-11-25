@@ -46,6 +46,8 @@ save(tsk_{name}, file = "inst/runs/tasks/tsk_{name}.rda")
 clients_to_evaluate <- function() {
   tibble::tribble(
     ~client, ~name,
+    'ellmer::chat_openrouter(model = "google/gemini-2.5-pro")', "gemini_2_5_pro",
+    'ellmer::chat_openrouter(model = "google/gemini-2.5-flash")', "gemini_2_5_flash",
     'ellmer::chat_openrouter(model = "anthropic/claude-sonnet-4.5")', "claude_4_5_sonnet",
     'ellmer::chat_openrouter(model = "anthropic/claude-haiku-4.5")', 'claude_4_5_haiku',
     'ellmer::chat_openrouter(model = "openai/gpt-4.1")', 'gpt_4_1',
