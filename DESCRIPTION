@@ -32,7 +32,7 @@ Depends:
     R (>= 3.5)
 LazyData: true
 Remotes:
-    simonpcouch/side@@helperbench,
+    simonpcouch/side@helperbench,
     simonpcouch/bluffbench,
     simonpcouch/predictivebench,
     tidyverse/ellmer@hacky-openrouter-fix
