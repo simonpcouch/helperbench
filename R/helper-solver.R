@@ -22,7 +22,7 @@
 #' }
 #'
 #' @export
-helper_solver <- function(inputs, ..., solver_chat, progress_file = NULL) {
+helper_solver <- function(inputs, ..., solver_chat) {
   check_inherits(solver_chat, "Chat")
 
   solver_dirs <- purrr::map(inputs, function(input) {
@@ -53,20 +53,45 @@ helper_solver <- function(inputs, ..., solver_chat, progress_file = NULL) {
   res_chats <- purrr::map(mirai_tasks, function(m) {
     result <- m[]
 
-    if (!is.null(progress_file)) {
-      current_progress <- as.numeric(readLines(progress_file, warn = FALSE))
-      writeLines(as.character(current_progress + 1), progress_file)
-    }
-
     result
   })
 
+  is_chat <- purrr::map_lgl(res_chats, inherits, "Chat")
+  result <- purrr::map_chr(res_chats, function(ch) {
+    if (inherits(ch, "Chat")) {
+      ch$last_turn()@text
+    } else {
+      # in this case, it's a mirai error
+      as.character(ch)
+    }
+  })
+
+  solver_chats <- purrr::map2(
+    res_chats, 
+    result,
+    function(res_chat, result) {
+      if (inherits(res_chat, "Chat")) {
+        res_chat
+      } else {
+        res <- solver_chat$clone()
+        res$set_turns(mock_turns(inputs, res_chat))
+      }
+    }
+  )
+
   list(
-    result = purrr::map_chr(res_chats, function(c) c$last_turn()@text),
-    solver_chat = res_chats,
+    result = result,
+    solver_chat = solver_chats,
     solver_metadata = purrr::map(solver_dirs, function(solver_dir) {
       list(solver_directory = solver_dir)
     })
+  )
+}
+
+mock_turns <- function(inputs, error) {
+  list(
+    ellmer::UserTurn(inputs[[1]]$prompt),
+    ellmer::AssistantTurn(error)
   )
 }
 
