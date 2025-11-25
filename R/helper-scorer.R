@@ -78,8 +78,19 @@ check_if_changed <- function(original_file, modified_file) {
 
 run_unit_tests <- function(package_dir) {
   test_result <- tryCatch({
-    withr::local_dir(package_dir)
+    side_dir <- system.file("resources", "side", package = "helperbench")
 
+    test_dir <- tempfile("test_side_")
+    dir.create(test_dir)
+    withr::defer(unlink(test_dir, recursive = TRUE))
+
+    fs::dir_copy(side_dir, test_dir)
+    test_pkg_dir <- file.path(test_dir, "side")
+
+    unlink(file.path(test_pkg_dir, "R"), recursive = TRUE)
+    fs::dir_copy(file.path(package_dir, "R"), test_pkg_dir)
+
+    withr::local_dir(test_pkg_dir)
     results <- devtools::test()
     results_tbl <- tibble::as_tibble(as.data.frame(results))
 
