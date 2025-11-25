@@ -19,11 +19,9 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-helperbench evaluates whether language models can consistently perform simple refactoring tasks. Models are given an agentic environment with tools to explore a codebase and asked to extract repeated code into a helper function. The eval measures whether models make the requested change while maintaining correctness.
+helperbench evaluates whether language models can consistently perform a simple refactoring task. Models are situated in a working directory with tools to explore a codebase and asked to extract repeated code into a helper function. The eval measures whether models make the requested change without breaking unit tests.
 
-This is a minimal, single-sample evaluation designed to measure basic refactoring reliability.
-
-helperbench is implemented with [vitals](https://vitals.tidyverse.org/), an LLM eval framework for R.
+helperbench is implemented in [ellmer](https://ellmer.tidyverse.org/) with [vitals](https://vitals.tidyverse.org/).
 
 ## Installation
 
@@ -35,74 +33,16 @@ pak::pak("simonpcouch/helperbench")
 
 Load it with:
 
-```r
+```{r}
 library(helperbench)
 ```
 
 ## Example
 
-The evaluation dataset contains a single sample with a refactoring prompt:
+The package ships with a data frame `helper_results` that contains evaluation results:
 
-```{r eval=FALSE}
-library(tibble)
-
-helper_dataset
-#> # A tibble: 1 × 3
-#>   id                         input             target
-#>   <chr>                      <list>            <chr>
-#> 1 refactor_yaml_frontmatter  <tibble [1 × 2]>  ""
+```{r}
+helper_results
 ```
 
-Each input contains a prompt and a directory path:
-
-```{r eval=FALSE}
-helper_dataset$input[[1]]
-#> # A tibble: 1 × 2
-#>   prompt                                                               dir
-#>   <chr>                                                                <chr>
-#> 1 "Refactor this into a helper:\n\n```\n# Remove YAML frontmatter i… "system.file(\"resources\", \"side\", package = \"helper…
-```
-
-The prompt asks the model to refactor a block of code:
-
-```{r eval=FALSE}
-cat(helper_dataset$input[[1]]$prompt)
-#> Refactor this into a helper:
-#>
-#> ```
-#> # Remove YAML frontmatter if present
-#> content_start <- 1
-#> if (length(skill_content) > 0 && skill_content[1] == "---") {
-#>   yaml_end <- which(skill_content == "---")
-#>   if (length(yaml_end) >= 2) {
-#>     content_start <- yaml_end[2] + 1
-#>   }
-#> }
-#> ```
-```
-
-The `dir` field contains a quoted expression that evaluates to the path of the side package. The solver creates isolated working directories for each input, gives models tools to explore the codebase and edit files, and captures their changes.
-
-The scorer uses deterministic grading:
-1. Can the modified file still be parsed?
-2. Has the file actually changed?
-3. Do the package's unit tests still pass?
-
-The model receives a "C" (correct) only if all checks pass.
-
-The `helper_task()` function creates a task with the package's built-in dataset, solver (`helper_solver()`), and scorer (`helper_scorer()`):
-
-```{r eval=FALSE}
-tsk <- helper_task()
-
-tsk
-#> An evaluation task helperbench.
-```
-
-Run `$eval()` with the `solver_chat` of your choice to measure refactoring consistency:
-
-```{r eval=FALSE}
-tsk$eval(
-  solver_chat = ellmer::chat_anthropic(model = "claude-sonnet-4-5-20250929")
-)
-```
+See `helper_task()` for more on how to run this eval yourself.
