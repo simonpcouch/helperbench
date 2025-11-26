@@ -37,12 +37,21 @@ Load it with:
 library(helperbench)
 ```
 
+helperbench will not go to CRAN.
+
 ## Example
+
+```{r}
+#| echo: false
+library(tibble)
+```
 
 The package ships with a data frame `helper_results` that contains evaluation results:
 
 ```{r}
-helper_results
+library(dplyr)
+
+sample_n(helper_results, 10)
 ```
 
 See `helper_task()` for more on how to run this eval yourself.
