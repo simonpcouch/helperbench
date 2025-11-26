@@ -35,4 +35,4 @@ Remotes:
     simonpcouch/side@helperbench,
     simonpcouch/bluffbench,
     simonpcouch/predictivebench,
-    tidyverse/ellmer@hacky-openrouter-fix
+    tidyverse/ellmer#890
