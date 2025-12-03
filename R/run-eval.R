@@ -53,7 +53,7 @@ clients_to_evaluate <- function() {
     'ellmer::chat_openrouter(model = "openai/gpt-4.1")', 'gpt_4_1',
     'ellmer::chat_openrouter(model = "openai/gpt-4.1-mini")', 'gpt_4_1_mini',
     'ellmer::chat_openrouter(model = "openai/gpt-oss-20b")', 'gpt_oss_20b',
-    'ellmer::chat_openrouter(model = "qwen/qwen3-coder-30b-a3b-instruct")', 'qwen_3_coder_30b',
+    'ellmer::chat_openrouter(model = "qwen/qwen3-14b")', 'qwen_3_14b',
     'ellmer::chat_openrouter(model = "mistralai/mistral-small-3.1-24b-instruct")', 'mistral_3_1_24b'
   )
 }
