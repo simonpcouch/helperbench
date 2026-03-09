@@ -33,13 +33,19 @@ helper_scorer <- function(samples, ...) {
     target_file <- file.path(solver_dir, "R", "tool-fetch_skill.R")
 
     if (!file.exists(target_file)) {
-      return(list(score = NA_character_, explanation = "Could not find target file."))
+      return(list(
+        score = NA_character_,
+        explanation = "Could not find target file."
+      ))
     }
 
-    can_parse <- tryCatch({
-      parse(target_file)
-      TRUE
-    }, error = function(e) FALSE)
+    can_parse <- tryCatch(
+      {
+        parse(target_file)
+        TRUE
+      },
+      error = function(e) FALSE
+    )
 
     if (!can_parse) {
       return(list(score = "I", explanation = "File cannot be parsed."))
@@ -51,7 +57,10 @@ helper_scorer <- function(samples, ...) {
     )
 
     if (!has_changed) {
-      return(list(score = "I", explanation = "No changes were made to the relevant file."))
+      return(list(
+        score = "I",
+        explanation = "No changes were made to the relevant file."
+      ))
     }
 
     test_passes <- run_unit_tests(solver_dir)
@@ -64,7 +73,11 @@ helper_scorer <- function(samples, ...) {
   })
 
   list(
-    score = factor(purrr::map_chr(results, "score"), levels = c("I", "C"), ordered = TRUE),
+    score = factor(
+      purrr::map_chr(results, "score"),
+      levels = c("I", "C"),
+      ordered = TRUE
+    ),
     explanation = as.list(purrr::map_chr(results, "explanation"))
   )
 }
@@ -77,27 +90,30 @@ check_if_changed <- function(original_file, modified_file) {
 }
 
 run_unit_tests <- function(package_dir) {
-  test_result <- tryCatch({
-    side_dir <- system.file("resources", "side", package = "helperbench")
+  test_result <- tryCatch(
+    {
+      side_dir <- system.file("resources", "side", package = "helperbench")
 
-    test_dir <- tempfile("test_side_")
-    dir.create(test_dir)
-    withr::defer(unlink(test_dir, recursive = TRUE))
+      test_dir <- tempfile("test_side_")
+      dir.create(test_dir)
+      withr::defer(unlink(test_dir, recursive = TRUE))
 
-    fs::dir_copy(side_dir, test_dir)
-    test_pkg_dir <- file.path(test_dir, "side")
+      fs::dir_copy(side_dir, test_dir)
+      test_pkg_dir <- file.path(test_dir, "side")
 
-    unlink(file.path(test_pkg_dir, "R"), recursive = TRUE)
-    fs::dir_copy(file.path(package_dir, "R"), test_pkg_dir)
+      unlink(file.path(test_pkg_dir, "R"), recursive = TRUE)
+      fs::dir_copy(file.path(package_dir, "R"), test_pkg_dir)
 
-    withr::local_dir(test_pkg_dir)
-    results <- devtools::test()
-    results_tbl <- tibble::as_tibble(as.data.frame(results))
+      withr::local_dir(test_pkg_dir)
+      results <- devtools::test()
+      results_tbl <- tibble::as_tibble(as.data.frame(results))
 
-    all(results_tbl$failed == 0)
-  }, error = function(e) {
-    FALSE
-  })
+      all(results_tbl$failed == 0)
+    },
+    error = function(e) {
+      FALSE
+    }
+  )
 
   test_result
 }

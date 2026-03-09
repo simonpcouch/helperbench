@@ -47,8 +47,10 @@ helper_results <-
       model == "qwen_3_14b" ~ "Qwen 3 14B"
     ),
     type = case_when(
-      model %in% c("Claude Sonnet 4.5", "Gemini Pro 2.5", "GPT-4.1") ~ "Frontier",
-      model %in% c("Claude Haiku 4.5", "Gemini Flash 2.5", "GPT-4.1 Mini") ~ "Budget",
+      model %in%
+        c("Claude Sonnet 4.5", "Gemini Pro 2.5", "GPT-4.1") ~ "Frontier",
+      model %in%
+        c("Claude Haiku 4.5", "Gemini Flash 2.5", "GPT-4.1 Mini") ~ "Budget",
       model %in% c("GPT OSS 20B", "Mistral 3.1 24B", "Qwen 3 14B") ~ "Local"
     ),
     cost_input = case_when(

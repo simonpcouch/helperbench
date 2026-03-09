@@ -1,4 +1,3 @@
-
 withr::local_envvar(VITALS_LOG_DIR = "inst/runs/logs")
 devtools::load_all()
 

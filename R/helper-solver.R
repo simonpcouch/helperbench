@@ -67,7 +67,7 @@ helper_solver <- function(inputs, ..., solver_chat) {
   })
 
   solver_chats <- purrr::map2(
-    res_chats, 
+    res_chats,
     result,
     function(res_chat, result) {
       if (inherits(res_chat, "Chat")) {
@@ -99,7 +99,10 @@ prepare_solver_directory <- function(side_dir) {
   solver_parent <- file.path("inst", "solver")
   dir.create(solver_parent, recursive = TRUE, showWarnings = FALSE)
 
-  temp_dir <- file.path(solver_parent, paste0("helper_side_", sample(0:10000, 1)))
+  temp_dir <- file.path(
+    solver_parent,
+    paste0("helper_side_", sample(0:10000, 1))
+  )
   dir.create(temp_dir, recursive = TRUE)
 
   fs::dir_copy(side_dir, temp_dir)

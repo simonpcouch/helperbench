@@ -13,18 +13,19 @@
 #' @noRd
 #' @examples
 #' script <- write_eval_script('ellmer::chat_anthropic(model = "claude-sonnet-4-5")', 'claude_4_5_sonnet')
-#' 
+#'
 #' file.edit(script)
-#' 
+#'
 #' source(script)
-#' 
-#' # To run the full evaluation script, use 
+#'
+#' # To run the full evaluation script, use
 #' run_evals(epochs = 20)
 write_eval_file <- function(client, name, epochs = 10) {
   dir.create("inst/runs/scripts", recursive = TRUE, showWarnings = FALSE)
   file <- file.path("inst/runs/scripts", paste0(name, ".R"))
 
-  script <- glue::glue('
+  script <- glue::glue(
+    '
 withr::local_envvar(VITALS_LOG_DIR = "inst/runs/logs")
 devtools::load_all()
 
@@ -36,7 +37,8 @@ tsk_{name}$eval(
 )
 
 save(tsk_{name}, file = "inst/runs/tasks/tsk_{name}.rda")
-')
+'
+  )
 
   writeLines(script, file)
 
@@ -45,16 +47,17 @@ save(tsk_{name}, file = "inst/runs/tasks/tsk_{name}.rda")
 
 clients_to_evaluate <- function() {
   tibble::tribble(
-    ~client, ~name,
-    'ellmer::chat_openrouter(model = "google/gemini-2.5-pro")', "gemini_2_5_pro",
-    'ellmer::chat_openrouter(model = "google/gemini-2.5-flash")', "gemini_2_5_flash",
-    'ellmer::chat_openrouter(model = "anthropic/claude-sonnet-4.5")', "claude_4_5_sonnet",
-    'ellmer::chat_openrouter(model = "anthropic/claude-haiku-4.5")', 'claude_4_5_haiku',
-    'ellmer::chat_openrouter(model = "openai/gpt-4.1")', 'gpt_4_1',
-    'ellmer::chat_openrouter(model = "openai/gpt-4.1-mini")', 'gpt_4_1_mini',
-    'ellmer::chat_openrouter(model = "openai/gpt-oss-20b")', 'gpt_oss_20b',
-    'ellmer::chat_openrouter(model = "qwen/qwen3-14b")', 'qwen_3_14b',
-    'ellmer::chat_openrouter(model = "mistralai/mistral-small-3.1-24b-instruct")', 'mistral_3_1_24b'
+    ~client                                                                       , ~name               ,
+    'ellmer::chat_openrouter(model = "google/gemini-2.5-pro")'                    , "gemini_2_5_pro"    ,
+    'ellmer::chat_openrouter(model = "google/gemini-2.5-flash")'                  , "gemini_2_5_flash"  ,
+    'ellmer::chat_openrouter(model = "anthropic/claude-sonnet-4.5")'              , "claude_4_5_sonnet" ,
+    'ellmer::chat_openrouter(model = "anthropic/claude-haiku-4.5")'               , 'claude_4_5_haiku'  ,
+    'ellmer::chat_openrouter(model = "openai/gpt-4.1")'                           , 'gpt_4_1'           ,
+    'ellmer::chat_openrouter(model = "openai/gpt-4.1-mini")'                      , 'gpt_4_1_mini'      ,
+    'ellmer::chat_openrouter(model = "openai/gpt-oss-20b")'                       , 'gpt_oss_20b'       ,
+    'ellmer::chat_openrouter(model = "qwen/qwen3-14b")'                           , 'qwen_3_14b'        ,
+    'ellmer::chat_openrouter(model = "qwen/qwen3.5-35b-a3b")'                     , 'qwen_3_5_35b_a3b'  ,
+    'ellmer::chat_openrouter(model = "mistralai/mistral-small-3.1-24b-instruct")' , 'mistral_3_1_24b'
   )
 }
 
@@ -62,10 +65,12 @@ write_all_eval_files <- function(clients = clients_to_evaluate(), epochs = 10) {
   purrr::walk2(
     clients$client,
     clients$name,
-    ~write_eval_file(.x, .y, epochs = epochs)
+    ~ write_eval_file(.x, .y, epochs = epochs)
   )
 
-  cli::cli_alert_success("Wrote {nrow(clients)} eval scripts to inst/runs/scripts")
+  cli::cli_alert_success(
+    "Wrote {nrow(clients)} eval scripts to inst/runs/scripts"
+  )
 }
 
 wipe_logs <- function() {
