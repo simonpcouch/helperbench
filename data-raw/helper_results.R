@@ -44,14 +44,21 @@ helper_results <-
       model == "gpt_4_1" ~ "GPT-4.1",
       model == "gpt_oss_20b" ~ "GPT OSS 20B",
       model == "mistral_3_1_24b" ~ "Mistral 3.1 24B",
-      model == "qwen_3_14b" ~ "Qwen 3 14B"
+      model == "qwen_3_14b" ~ "Qwen 3 14B",
+      model == "qwen_3_5_35b_a3b" ~ "Qwen 3.5 35B-A3B",
     ),
     type = case_when(
       model %in%
         c("Claude Sonnet 4.5", "Gemini Pro 2.5", "GPT-4.1") ~ "Frontier",
       model %in%
         c("Claude Haiku 4.5", "Gemini Flash 2.5", "GPT-4.1 Mini") ~ "Budget",
-      model %in% c("GPT OSS 20B", "Mistral 3.1 24B", "Qwen 3 14B") ~ "Local"
+      model %in%
+        c(
+          "GPT OSS 20B",
+          "Mistral 3.1 24B",
+          "Qwen 3 14B",
+          "Qwen 3.5 35B-A3B"
+        ) ~ "Local"
     ),
     cost_input = case_when(
       model == "Claude Haiku 4.5" ~ 1,
@@ -62,7 +69,8 @@ helper_results <-
       model == "GPT-4.1" ~ 2,
       model == "GPT OSS 20B" ~ 0.03,
       model == "Mistral 3.1 24B" ~ 0.03,
-      model == "Qwen 3 14B" ~ 0.06
+      model == "Qwen 3 14B" ~ 0.06,
+      model == "Qwen 3.5 35B-A3B" ~ 0.1625
     ),
     cost_output = case_when(
       model == "Claude Haiku 4.5" ~ 5,
@@ -73,7 +81,8 @@ helper_results <-
       model == "GPT-4.1" ~ 8,
       model == "GPT OSS 20B" ~ 0.14,
       model == "Mistral 3.1 24B" ~ 0.11,
-      model == "Qwen 3 14B" ~ 0.25
+      model == "Qwen 3 14B" ~ 0.25,
+      model == "Qwen 3.5 35B-A3B" ~ 1.3
     ),
     cost = (input / 1e6) * cost_input + (output / 1e6) * cost_output
   ) %>%
