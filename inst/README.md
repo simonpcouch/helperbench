@@ -1,6 +1,7 @@
 A number of repositories have been cloned into the `inst/resources` subdirectory using the following:
 
 ```
+mkdir -p inst/resources
 cd inst/resources
 git clone --branch hacky-openrouter-fix https://github.com/tidyverse/ellmer.git
 git clone --branch helperbench https://github.com/simonpcouch/side

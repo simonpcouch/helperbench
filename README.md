@@ -52,18 +52,79 @@ library(dplyr)
 
 sample_n(helper_results, 10)
 #> # A tibble: 10 × 6
-#>    model             score type          cost   input output
-#>    <chr>             <ord> <chr>        <dbl>   <dbl>  <dbl>
-#>  1 GPT-4.1           I     Frontier 0.442      217512    846
-#>  2 Claude Haiku 4.5  C     Budget   0.421      394098   5349
-#>  3 Claude Sonnet 4.5 C     Frontier 0.406      128192   1419
-#>  4 Qwen Coder 3 30B  I     Local    0.0323     522523   3623
-#>  5 Claude Haiku 4.5  C     Budget   0.122      112549   1805
-#>  6 Gemini Flash 2.5  I     Budget   0.0304      77478   2855
-#>  7 Gemini Flash 2.5  C     Budget   0.0645     124396  10855
-#>  8 Gemini Pro 2.5    I     Frontier 0.0966      21295   6995
-#>  9 Mistral 3.1 24B   I     Local    0.0000197       1    179
-#> 10 GPT-4.1           C     Frontier 2.46      1203569   6735
+#>    model            score type           cost  input output
+#>    <chr>            <ord> <chr>         <dbl>  <dbl>  <dbl>
+#>  1 Gemini Pro 2.5   C     Frontier  0.104      13818   8641
+#>  2 Gemini Pro 2.5   C     Frontier  0.0801     27989   4509
+#>  3 Qwen 3 14B       I     Local     0.00298    35268   3470
+#>  4 GPT-4.1 Mini     C     Budget    0.193     477208   1584
+#>  5 Qwen 3 14B       I     Local     0.00159    10929   3724
+#>  6 Mistral 3.1 24B  I     Local    NA             NA     NA
+#>  7 Mistral 3.1 24B  I     Local     0.000143    4054    192
+#>  8 Mistral 3.1 24B  I     Local     0.0000207      1    188
+#>  9 Gemini Flash 2.5 C     Budget    0.00738    17904    803
+#> 10 Gemini Flash 2.5 C     Budget    0.0145     32975   1827
 ```
 
 See `helper_task()` for more on how to run this eval yourself.
+
+## How to add a new model benchmark
+
+All models are evaluated via [OpenRouter](https://openrouter.ai/) for
+consistency. Adding a new model benchmark involves four steps:
+
+### 1. Register the model
+
+Add a new row to `clients_to_evaluate()` in `R/run-eval.R` with the
+OpenRouter model ID and a snake_case name:
+
+``` r
+clients_to_evaluate <- function() {
+  tibble::tribble(
+    ~client, ~name,
+    # ... existing models ...
+    'ellmer::chat_openrouter(model = "provider/model-name")', "model_name"
+  )
+}
+```
+
+### 2. Generate the eval script
+
+Run `write_all_eval_files()` to regenerate all scripts (including your
+new one) in `inst/runs/scripts/`:
+
+``` r
+devtools::load_all()
+write_all_eval_files()
+```
+
+This creates `inst/runs/scripts/model_name.R` with the boilerplate to
+run the evaluation and save the task result.
+
+### 3. Run the evaluation
+
+Source the generated script:
+
+``` r
+source("inst/runs/scripts/model_name.R")
+```
+
+This evaluates the model across all samples and epochs, saving the
+result to `inst/runs/tasks/tsk_model_name.rda`.
+
+### 4. Update the results dataset
+
+In `data-raw/helper_results.R`, add entries for the new model in each of
+the `case_when()` blocks:
+
+- **Display name**: Map the snake_case name to a human-readable label
+  (e.g., `model_name == "model_name" ~ "Model Name"`)
+- **Type**: Categorize as `"Frontier"`, `"Budget"`, or `"Local"`
+- **Cost**: Add the per-million-token input and output costs from
+  OpenRouter
+
+Then rebuild the dataset:
+
+``` r
+source("data-raw/helper_results.R")
+```
