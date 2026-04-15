@@ -50,9 +50,22 @@ helper_solver <- function(inputs, ..., solver_chat) {
     )
   })
 
-  res_chats <- purrr::map(mirai_tasks, function(m) {
+  n <- length(mirai_tasks)
+  cli::cat_line(paste0("Solving 0/", n))
+  prev_time <- proc.time()[["elapsed"]]
+  start_time <- prev_time
+  res_chats <- purrr::imap(mirai_tasks, function(m, i) {
     result <- m[]
-
+    now <- proc.time()[["elapsed"]]
+    last <- now - prev_time
+    prev_time <<- now
+    elapsed <- now - start_time
+    eta_secs <- (elapsed / i) * (n - i)
+    eta_time <- format(Sys.time() + eta_secs, "%H:%M")
+    cli::cat_line(paste0(
+      "Solving ", i, "/", n,
+      " (last: ", round(last / 60, 1), "min, ETA: ", eta_time, ")"
+    ))
     result
   })
 
