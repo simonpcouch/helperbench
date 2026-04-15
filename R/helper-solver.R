@@ -30,32 +30,28 @@ helper_solver <- function(inputs, ..., solver_chat) {
     prepare_solver_directory(side_dir)
   })
 
-  mirai_tasks <- purrr::map2(solver_dirs, inputs, function(solver_dir, input) {
-    mirai::mirai(
-      {
-        setwd(solver_dir)
-        ch_i <- solver_chat$clone()
-        tools <- side:::sidekick_tools(socket_url = NULL)
-        ch_i$set_tools(tools)
-        ch_i$set_system_prompt(paste(
-          readLines(system.file("agents/main.md", package = "side")),
-          collapse = "\n"
-        ))
-        ch_i$chat(input$prompt, echo = FALSE)
-        ch_i
-      },
-      solver_dir = solver_dir,
-      input = input,
-      solver_chat = solver_chat
-    )
-  })
-
-  n <- length(mirai_tasks)
+  n <- length(inputs)
   cli::cat_line(paste0("Solving 0/", n))
   prev_time <- proc.time()[["elapsed"]]
   start_time <- prev_time
-  res_chats <- purrr::imap(mirai_tasks, function(m, i) {
-    result <- m[]
+  res_chats <- purrr::map2(solver_dirs, inputs, function(solver_dir, input) {
+    old_wd <- setwd(solver_dir)
+    on.exit(setwd(old_wd))
+    ch_i <- solver_chat$clone()
+    tools <- side:::sidekick_tools(socket_url = NULL)
+    ch_i$set_tools(tools)
+    ch_i$set_system_prompt(paste(
+      readLines(system.file("agents/main.md", package = "side")),
+      collapse = "\n"
+    ))
+    result <- tryCatch(
+      {
+        ch_i$chat(input$prompt, echo = FALSE)
+        ch_i
+      },
+      error = function(e) e
+    )
+    i <- match(solver_dir, solver_dirs)
     now <- proc.time()[["elapsed"]]
     last <- now - prev_time
     prev_time <<- now
@@ -66,15 +62,15 @@ helper_solver <- function(inputs, ..., solver_chat) {
       "Solving ", i, "/", n,
       " (last: ", round(last / 60, 1), "min, ETA: ", eta_time, ")"
     ))
+    Sys.sleep(30)
     result
   })
 
-  is_chat <- purrr::map_lgl(res_chats, inherits, "Chat")
   result <- purrr::map_chr(res_chats, function(ch) {
     if (inherits(ch, "Chat")) {
       ch$last_turn()@text
     } else {
-      # in this case, it's a mirai error
+      # in this case, it's an error condition
       as.character(ch)
     }
   })

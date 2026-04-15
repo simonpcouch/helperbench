@@ -58,7 +58,8 @@ clients_to_evaluate <- function() {
     'ellmer::chat_openrouter(model = "qwen/qwen3-14b")'                           , 'qwen_3_14b'        ,
     'ellmer::chat_openrouter(model = "qwen/qwen3.5-35b-a3b")'                     , 'qwen_3_5_35b_a3b'  ,
     'ellmer::chat_openrouter(model = "mistralai/mistral-small-3.1-24b-instruct")' , 'mistral_3_1_24b'   ,
-    'ellmer::chat_openai_compatible(base_url = paste0(Sys.getenv("GEMMA4_BASE_URL"), "/v1"), model = "google/gemma-4-26B-A4B-it", credentials = function() Sys.getenv("BASETEN_API_KEY"))' , 'gemma_4_26b_a4b'
+    'ellmer::chat_openai_compatible(base_url = paste0(Sys.getenv("GEMMA4_BASE_URL"), "/v1"), model = "google/gemma-4-26B-A4B-it", credentials = function() Sys.getenv("BASETEN_API_KEY"))' , 'gemma_4_26b_a4b',
+    'ellmer::chat_openrouter(model = "google/gemini-3.1-pro-preview", api_args = list(reasoning = list(effort = "medium")))' , 'gemini_3_1_pro'
   )
 }
 
