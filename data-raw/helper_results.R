@@ -46,6 +46,7 @@ helper_results <-
       model == "mistral_3_1_24b" ~ "Mistral 3.1 24B",
       model == "qwen_3_14b" ~ "Qwen 3 14B",
       model == "qwen_3_5_35b_a3b" ~ "Qwen 3.5 35B-A3B",
+      model == "gemma_4_26b_a4b" ~ "Gemma 4 26B-A4B",
     ),
     type = case_when(
       model %in%
@@ -57,7 +58,8 @@ helper_results <-
           "GPT OSS 20B",
           "Mistral 3.1 24B",
           "Qwen 3 14B",
-          "Qwen 3.5 35B-A3B"
+          "Qwen 3.5 35B-A3B",
+          "Gemma 4 26B-A4B"
         ) ~ "Local"
     ),
     cost_input = case_when(
@@ -70,7 +72,8 @@ helper_results <-
       model == "GPT OSS 20B" ~ 0.03,
       model == "Mistral 3.1 24B" ~ 0.03,
       model == "Qwen 3 14B" ~ 0.06,
-      model == "Qwen 3.5 35B-A3B" ~ 0.1625
+      model == "Qwen 3.5 35B-A3B" ~ 0.1625,
+      model == "Gemma 4 26B-A4B" ~ 0.13
     ),
     cost_output = case_when(
       model == "Claude Haiku 4.5" ~ 5,
@@ -82,7 +85,8 @@ helper_results <-
       model == "GPT OSS 20B" ~ 0.14,
       model == "Mistral 3.1 24B" ~ 0.11,
       model == "Qwen 3 14B" ~ 0.25,
-      model == "Qwen 3.5 35B-A3B" ~ 1.3
+      model == "Qwen 3.5 35B-A3B" ~ 1.3,
+      model == "Gemma 4 26B-A4B" ~ 0.40
     ),
     cost = (input / 1e6) * cost_input + (output / 1e6) * cost_output
   ) %>%
