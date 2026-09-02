@@ -1,0 +1,2 @@
+# Downloaded from ornith-ai/Ornith-1.5-9B-GGUF on Hugging Face.
+FROM /tmp/helperbench-small-models/Ornith-1.5-9B-Q4_K_M.gguf
