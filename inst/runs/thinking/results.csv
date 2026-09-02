@@ -15,3 +15,7 @@
 "granite4.2:8b-helperbench","low",68,185,237,414
 "granite4.2:8b-helperbench","medium",59,895,2920,384
 "granite4.2:8b-helperbench","high",59,895,2920,384
+"ornith-1.5-9b-q4","none",56,88,0,317
+"ornith-1.5-9b-q4","low",54,420,1225,374
+"ornith-1.5-9b-q4","medium",54,420,1225,374
+"ornith-1.5-9b-q4","high",54,420,1225,374
