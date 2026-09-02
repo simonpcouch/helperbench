@@ -3,3 +3,15 @@
 "granite4.2:3b","low",68,296,1012,85
 "granite4.2:3b","medium",59,4096,14775,0
 "granite4.2:3b","high",59,4096,14767,0
+"lfm2.5-2.6b-q4","none",54,1027,3507,478
+"lfm2.5-2.6b-q4","low",54,1027,3507,478
+"lfm2.5-2.6b-q4","medium",54,1027,3507,478
+"lfm2.5-2.6b-q4","high",54,1027,3507,478
+"qwen3.8-4b-distill-q4","none",56,47,0,187
+"qwen3.8-4b-distill-q4","low",54,4096,909,14391
+"qwen3.8-4b-distill-q4","medium",54,4096,909,14391
+"qwen3.8-4b-distill-q4","high",54,4096,909,14391
+"granite4.2:8b-helperbench","none",59,80,0,310
+"granite4.2:8b-helperbench","low",68,185,237,414
+"granite4.2:8b-helperbench","medium",59,895,2920,384
+"granite4.2:8b-helperbench","high",59,895,2920,384

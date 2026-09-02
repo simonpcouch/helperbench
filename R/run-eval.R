@@ -64,7 +64,7 @@ clients_to_evaluate <- function() {
     'ellmer::chat_ollama(model = "granite4.2:8b-helperbench", api_args = list(reasoning_effort = "medium"))' , 'granite_4_2_8b',
     'ellmer::chat_ollama(model = "granite4.2:3b-helperbench", api_args = list(reasoning_effort = "low"))' , 'granite_4_2_3b',
     'ellmer::chat_ollama(model = "lfm2.5-2.6b-q4", api_args = list(reasoning_effort = "medium"))' , 'lfm_2_5_2_6b',
-    'ellmer::chat_ollama(model = "qwen3.8-4b-distill-q4", api_args = list(reasoning_effort = "medium"))' , 'qwen_3_8_4b_distill'
+    'ellmer::chat_ollama(model = "qwen3.8-4b-distill-q4", api_args = list(reasoning_effort = "none"))' , 'qwen_3_8_4b_distill'
   )
 }
 

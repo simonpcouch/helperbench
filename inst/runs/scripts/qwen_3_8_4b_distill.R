@@ -7,7 +7,7 @@ tsk_qwen_3_8_4b_distill <- tsk$clone()
 tsk_qwen_3_8_4b_distill$eval(
   solver_chat = ellmer::chat_ollama(
     model = "qwen3.8-4b-distill-q4",
-    api_args = list(reasoning_effort = "medium")
+    api_args = list(reasoning_effort = "none")
   ),
   delay = 0
 )
