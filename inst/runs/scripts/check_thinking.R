@@ -67,4 +67,4 @@ if (file.exists(result_path)) {
 }
 
 write.csv(results, result_path, row.names = FALSE)
-print(results, row.names = FALSE)
+print(results)

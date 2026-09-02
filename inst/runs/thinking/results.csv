@@ -1,0 +1,5 @@
+"model","effort","prompt_tokens","completion_tokens","reasoning_chars","answer_chars"
+"granite4.2:3b","none",59,1605,0,5400
+"granite4.2:3b","low",68,296,1012,85
+"granite4.2:3b","medium",59,4096,14775,0
+"granite4.2:3b","high",59,4096,14767,0
