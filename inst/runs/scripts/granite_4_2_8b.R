@@ -6,8 +6,8 @@ tsk <- helper_task(epochs = 10)
 tsk_granite_4_2_8b <- tsk$clone()
 tsk_granite_4_2_8b$eval(
   solver_chat = ellmer::chat_ollama(
-    model = "granite4.2:8b",
-    params = ellmer::params(reasoning_effort = "medium")
+    model = "granite4.2:8b-helperbench",
+    api_args = list(reasoning_effort = "medium")
   ),
   delay = 0
 )

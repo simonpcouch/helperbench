@@ -102,7 +102,7 @@ helper_solver <- function(inputs, ..., solver_chat, delay = 30) {
 mock_turns <- function(inputs, error) {
   list(
     ellmer::UserTurn(inputs[[1]]$prompt),
-    ellmer::AssistantTurn(error)
+    ellmer::AssistantTurn(list(ellmer::ContentText(as.character(error))))
   )
 }
 

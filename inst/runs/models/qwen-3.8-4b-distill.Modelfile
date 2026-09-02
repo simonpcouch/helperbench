@@ -1,0 +1,2 @@
+# Downloaded from empero-ai/Qwen3.8-4B-Distill-GGUF on Hugging Face.
+FROM /tmp/helperbench-small-models/Qwen3.8-4B-Q4_K_M.gguf

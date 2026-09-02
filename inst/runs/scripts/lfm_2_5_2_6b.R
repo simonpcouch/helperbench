@@ -7,7 +7,7 @@ tsk_lfm_2_5_2_6b <- tsk$clone()
 tsk_lfm_2_5_2_6b$eval(
   solver_chat = ellmer::chat_ollama(
     model = "lfm2.5-2.6b-q4",
-    params = ellmer::params(reasoning_effort = "medium")
+    api_args = list(reasoning_effort = "medium")
   ),
   delay = 0
 )

@@ -1,0 +1,2 @@
+# Downloaded from LiquidAI/LFM2.5-2.6B-GGUF on Hugging Face.
+FROM /tmp/helperbench-small-models/LFM2.5-2.6B-Q4_K_M.gguf

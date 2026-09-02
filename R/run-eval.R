@@ -60,11 +60,11 @@ clients_to_evaluate <- function() {
     'ellmer::chat_openrouter(model = "mistralai/mistral-small-3.1-24b-instruct")' , 'mistral_3_1_24b'   ,
     'ellmer::chat_openai_compatible(base_url = paste0(Sys.getenv("GEMMA4_BASE_URL"), "/v1"), model = "google/gemma-4-26B-A4B-it", credentials = function() Sys.getenv("BASETEN_API_KEY"))' , 'gemma_4_26b_a4b',
     'ellmer::chat_openrouter(model = "google/gemini-3.1-pro-preview", api_args = list(reasoning = list(effort = "medium")))' , 'gemini_3_1_pro',
-    'ellmer::chat_ollama(model = "ornith-1.5-9b-q4", params = ellmer::params(reasoning_effort = "medium"))' , 'ornith_1_5_9b',
-    'ellmer::chat_ollama(model = "granite4.2:8b", params = ellmer::params(reasoning_effort = "medium"))' , 'granite_4_2_8b',
-    'ellmer::chat_ollama(model = "granite4.2:3b", params = ellmer::params(reasoning_effort = "low"))' , 'granite_4_2_3b',
-    'ellmer::chat_ollama(model = "lfm2.5-2.6b-q4", params = ellmer::params(reasoning_effort = "medium"))' , 'lfm_2_5_2_6b',
-    'ellmer::chat_ollama(model = "qwen3.8-4b-distill-q4", params = ellmer::params(reasoning_effort = "medium"))' , 'qwen_3_8_4b_distill'
+    'ellmer::chat_ollama(model = "ornith-1.5-9b-q4", api_args = list(reasoning_effort = "medium"))' , 'ornith_1_5_9b',
+    'ellmer::chat_ollama(model = "granite4.2:8b-helperbench", api_args = list(reasoning_effort = "medium"))' , 'granite_4_2_8b',
+    'ellmer::chat_ollama(model = "granite4.2:3b-helperbench", api_args = list(reasoning_effort = "low"))' , 'granite_4_2_3b',
+    'ellmer::chat_ollama(model = "lfm2.5-2.6b-q4", api_args = list(reasoning_effort = "medium"))' , 'lfm_2_5_2_6b',
+    'ellmer::chat_ollama(model = "qwen3.8-4b-distill-q4", api_args = list(reasoning_effort = "medium"))' , 'qwen_3_8_4b_distill'
   )
 }
 

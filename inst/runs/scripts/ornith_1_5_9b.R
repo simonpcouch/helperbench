@@ -7,7 +7,7 @@ tsk_ornith_1_5_9b <- tsk$clone()
 tsk_ornith_1_5_9b$eval(
   solver_chat = ellmer::chat_ollama(
     model = "ornith-1.5-9b-q4",
-    params = ellmer::params(reasoning_effort = "medium")
+    api_args = list(reasoning_effort = "medium")
   ),
   delay = 0
 )
