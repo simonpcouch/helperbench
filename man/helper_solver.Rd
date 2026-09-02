@@ -4,7 +4,7 @@
 \alias{helper_solver}
 \title{Helper solver}
 \usage{
-helper_solver(inputs, ..., solver_chat)
+helper_solver(inputs, ..., solver_chat, delay = 30)
 }
 \arguments{
 \item{inputs}{List of input objects from the helperbench dataset. Each input
@@ -13,6 +13,9 @@ should have the refactoring prompt.}
 \item{...}{Additional arguments (currently unused).}
 
 \item{solver_chat}{An ellmer Chat object to use for solving the prompts.}
+
+\item{delay}{Number of seconds to wait between samples. Default is 30 to
+avoid hosted-provider rate limits.}
 }
 \value{
 A list with the following components:

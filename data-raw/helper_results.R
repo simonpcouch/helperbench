@@ -48,6 +48,11 @@ helper_results <-
       model == "qwen_3_5_35b_a3b" ~ "Qwen 3.5 35B-A3B",
       model == "gemma_4_26b_a4b" ~ "Gemma 4 26B-A4B",
       model == "gemini_3_1_pro" ~ "Gemini Pro 3.1",
+      model == "ornith_1_5_9b" ~ "Ornith 1.5 9B",
+      model == "granite_4_2_8b" ~ "Granite 4.2 8B",
+      model == "granite_4_2_3b" ~ "Granite 4.2 3B",
+      model == "lfm_2_5_2_6b" ~ "LFM 2.5 2.6B",
+      model == "qwen_3_8_4b_distill" ~ "Qwen 3.8 4B Distill",
     ),
     type = case_when(
       model %in%
@@ -61,7 +66,12 @@ helper_results <-
           "Mistral 3.1 24B",
           "Qwen 3 14B",
           "Qwen 3.5 35B-A3B",
-          "Gemma 4 26B-A4B"
+          "Gemma 4 26B-A4B",
+          "Ornith 1.5 9B",
+          "Granite 4.2 8B",
+          "Granite 4.2 3B",
+          "LFM 2.5 2.6B",
+          "Qwen 3.8 4B Distill"
         ) ~ "Local"
     ),
     cost_input = case_when(

@@ -12,6 +12,8 @@
 #'   should have the refactoring prompt.
 #' @param ... Additional arguments (currently unused).
 #' @param solver_chat An ellmer Chat object to use for solving the prompts.
+#' @param delay Number of seconds to wait between samples. Default is 30 to
+#'   avoid hosted-provider rate limits.
 #'
 #' @return A list with the following components:
 #' \describe{
@@ -22,7 +24,7 @@
 #' }
 #'
 #' @export
-helper_solver <- function(inputs, ..., solver_chat) {
+helper_solver <- function(inputs, ..., solver_chat, delay = 30) {
   check_inherits(solver_chat, "Chat")
 
   solver_dirs <- purrr::map(inputs, function(input) {
@@ -62,7 +64,7 @@ helper_solver <- function(inputs, ..., solver_chat) {
       "Solving ", i, "/", n,
       " (last: ", round(last / 60, 1), "min, ETA: ", eta_time, ")"
     ))
-    Sys.sleep(30)
+    Sys.sleep(delay)
     result
   })
 
