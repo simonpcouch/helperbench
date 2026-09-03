@@ -7,7 +7,7 @@ tsk_granite_4_2_8b <- tsk$clone()
 tsk_granite_4_2_8b$eval(
   solver_chat = ellmer::chat_ollama(
     model = "granite4.2:8b-helperbench",
-    api_args = list(reasoning_effort = "medium")
+    api_args = list(reasoning_effort = "low")
   ),
   delay = 0
 )
